@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../models/circadian_schedule.dart';
 import '../viewmodels/schedule_viewmodel.dart';
 import 'painters/sky_painter.dart';
+import 'settings_screen.dart';
 import 'widgets/cue_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -173,6 +174,21 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             sunset: schedule.sunset,
                             now: DateTime.now(),
                             schedule: schedule,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 40,
+                        right: 8,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.settings,
+                            color: Colors.white70,
+                          ),
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const SettingsScreen(),
+                            ),
                           ),
                         ),
                       ),

@@ -62,6 +62,8 @@ class NotificationService {
     );
   }
 
+  Future<void> cancelAll() => _plugin.cancelAll();
+
   Future<void> scheduleAllCueNotifications(CircadianSchedule schedule) async {
     await _plugin.cancelAll();
 
