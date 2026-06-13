@@ -97,9 +97,9 @@ class SkyPainter extends CustomPainter {
   ArcGeometry _arcGeometry(Size size) => (
         startX: size.width * 0.05,
         endX: size.width * 0.95,
-        horizonY: size.height * 0.75,
+        horizonY: size.height * 0.68,
         controlX: size.width * 0.5,
-        controlY: size.height * 0.1,
+        controlY: size.height * 0.08,
       );
 
   void _drawArc(Canvas canvas, ArcGeometry geo) {
@@ -109,7 +109,7 @@ class SkyPainter extends CustomPainter {
 
     final arcPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.4)
-      ..strokeWidth = 1.5
+      ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke;
 
     canvas.drawPath(path, arcPaint);
@@ -150,7 +150,7 @@ class SkyPainter extends CustomPainter {
       final x = _quadraticBezierPoint(geo.startX, geo.controlX, geo.endX, t);
       final y = _quadraticBezierPoint(geo.horizonY, geo.controlY, geo.horizonY, t);
 
-      canvas.drawCircle(Offset(x, y), 3, dotPaint);
+      canvas.drawCircle(Offset(x, y), 4.5, dotPaint);
       _drawMarkerLabel(canvas, marker.label, x, y, marker.labelAbove);
     }
   }
@@ -160,7 +160,7 @@ class SkyPainter extends CustomPainter {
     final paragraphBuilder = ui.ParagraphBuilder(
       ui.ParagraphStyle(
         textAlign: TextAlign.center,
-        fontSize: 9,
+        fontSize: 11,
       ),
     )
       ..pushStyle(ui.TextStyle(color: Colors.white.withValues(alpha: 0.85)))
@@ -187,8 +187,8 @@ class SkyPainter extends CustomPainter {
     final glowPaint = Paint()
       ..color = const Color(0xFFFDB813).withValues(alpha: 0.3);
 
-    canvas.drawCircle(Offset(sunX, sunY), 16, glowPaint);
-    canvas.drawCircle(Offset(sunX, sunY), 10, solidPaint);
+    canvas.drawCircle(Offset(sunX, sunY), 20, glowPaint);
+    canvas.drawCircle(Offset(sunX, sunY), 13, solidPaint);
   }
 
   double _quadraticBezierPoint(double p0, double p1, double p2, double t) {

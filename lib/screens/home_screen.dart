@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         ),
                       ),
                       Positioned(
-                        top: 40,
+                        top: 8,
                         right: 8,
                         child: IconButton(
                           icon: const Icon(
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         ),
                       ),
                       Positioned(
-                        top: 48,
+                        top: 16,
                         left: 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               _greeting(),
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 26,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -211,10 +211,25 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               city ?? 'Unknown location',
                               style: const TextStyle(
                                 color: Colors.white70,
-                                fontSize: 14,
+                                fontSize: 16,
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: 100,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.transparent, Color(0xFFF5F5F7)],
+                            ),
+                          ),
                         ),
                       ),
                     ],
