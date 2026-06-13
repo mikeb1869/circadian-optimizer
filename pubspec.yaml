@@ -43,9 +43,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_launcher_icons:
+  ios: true
+  android: false
+  image_path: "assets/icon/circadian_app_icon.png"
+  remove_alpha_ios: true
 # The following section is specific to Flutter packages.
 flutter:
 

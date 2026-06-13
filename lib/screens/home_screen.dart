@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             ScheduleSuccess(:final schedule, :final city) => ListView(
               children: [
                 SizedBox(
-                  height: 220,
+                  height: MediaQuery.of(context).size.height * 0.38,
                   width: double.infinity,
                   child: Stack(
                     children: [
