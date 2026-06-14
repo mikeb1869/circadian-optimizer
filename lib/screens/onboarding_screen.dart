@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_service.dart';
 import 'home_screen.dart';
+
+const _bg = Color(0xFF0F1F5C);
+const _amber = Color(0xFFFDB813);
+
+class _PageData {
+  final String assetPath;
+  final String title;
+  final String body;
+  final String buttonLabel;
+  const _PageData({
+    required this.assetPath,
+    required this.title,
+    required this.body,
+    required this.buttonLabel,
+  });
+}
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,42 +33,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   static const _pages = [
-    _OnboardingPage(
-      emoji: '🌍',
-      title: 'Your body has a clock',
+    _PageData(
+      assetPath: 'assets/illustrations/onboarding_1.svg',
+      title: 'Your body runs on sunlight',
       body:
-          'Your circadian rhythm controls when you sleep, when you\'re alert, '
-          'and how you feel. Getting it right changes everything.',
+          'Your circadian rhythm controls energy, mood, and sleep. '
+          'Light is the master switch.',
+      buttonLabel: 'Next',
     ),
-    _OnboardingPage(
-      emoji: '☀️',
-      title: 'Light is the key',
+    _PageData(
+      assetPath: 'assets/illustrations/onboarding_2.svg',
+      title: 'Three anchors, one schedule',
       body:
-          'Morning sunlight sets your clock. Afternoon light locks it in. '
-          'Dimming lights at night lets melatonin rise on schedule.',
+          'Morning light sets your clock. Afternoon light locks it. '
+          'Evening darkness lets melatonin rise.',
+      buttonLabel: 'Next',
     ),
-    _OnboardingPage(
-      emoji: '✈️',
-      title: 'Built for travelers',
+    _PageData(
+      assetPath: 'assets/illustrations/onboarding_3.svg',
+      title: 'Built for wherever you are',
       body:
-          'Crossing time zones resets your clock — but only if you know when '
-          'to seek light and when to avoid it. Circadian Optimizer does the '
-          'math so you don\'t have to.',
+          'Sunrise in Chiang Mai isn\'t sunrise in Tokyo. Your schedule '
+          'updates automatically when you travel.',
+      buttonLabel: 'Next',
     ),
-    _OnboardingPage(
-      emoji: '📍',
-      title: 'Your location, your sunrise',
+    _PageData(
+      assetPath: 'assets/illustrations/onboarding_4.svg',
+      title: 'Your location stays yours',
       body:
-          'Sunrise and sunset vary by where you are. We use your location to '
-          'calculate precise times — just for you, just for today. Your '
-          'location is never stored or shared.',
+          'We use GPS only to calculate sunrise and sunset. Your location '
+          'is never stored, shared, or tracked.',
+      buttonLabel: 'Allow location',
     ),
-    _OnboardingPage(
-      emoji: '🔔',
-      title: 'Gentle nudges, not noise',
+    _PageData(
+      assetPath: 'assets/illustrations/onboarding_5.svg',
+      title: 'Four nudges a day, that\'s it',
       body:
-          'We\'ll send four notifications a day — one per cue. That\'s it. '
-          'You can turn them off any time in Settings.',
+          'One notification per cue. No noise, no tracking. '
+          'Turn them off any time in Settings.',
+      buttonLabel: 'Get Started',
     ),
   ];
 
@@ -64,6 +84,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       _completeOnboarding();
     }
+  }
+
+  void _onBack() {
+    _pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   Future<void> _completeOnboarding() async {
@@ -86,19 +113,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLastPage = _currentPage == _pages.length - 1;
+    final page = _pages[_currentPage];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: _bg,
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(
+              height: 48,
+              child: _currentPage > 0
+                  ? Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white70),
+                        onPressed: _onBack,
+                      ),
+                    )
+                  : null,
+            ),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: _pages.length,
                 onPageChanged: (i) => setState(() => _currentPage = i),
-                itemBuilder: (_, i) => _pages[i],
+                itemBuilder: (_, i) => _OnboardingPage(page: _pages[i]),
               ),
             ),
             Padding(
@@ -116,8 +156,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: i == _currentPage
-                              ? const Color(0xFF1A3E8A)
-                              : Colors.grey.shade300,
+                              ? _amber
+                              : Colors.white.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -130,17 +170,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: ElevatedButton(
                       onPressed: _onNext,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1A3E8A),
-                        foregroundColor: Colors.white,
+                        backgroundColor: _amber,
+                        foregroundColor: _bg,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Text(
-                        isLastPage ? 'Get Started' : 'Next',
+                        page.buttonLabel,
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
@@ -156,15 +196,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 class _OnboardingPage extends StatelessWidget {
-  final String emoji;
-  final String title;
-  final String body;
+  final _PageData page;
 
-  const _OnboardingPage({
-    required this.emoji,
-    required this.title,
-    required this.body,
-  });
+  const _OnboardingPage({required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -173,24 +207,25 @@ class _OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 72)),
-          const SizedBox(height: 32),
+          SvgPicture.asset(page.assetPath, height: 220),
+          const SizedBox(height: 40),
           Text(
-            title,
+            page.title,
             textAlign: TextAlign.center,
             style: const TextStyle(
+              color: Colors.white,
               fontSize: 26,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              height: 1.2,
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            body,
+            page.body,
             textAlign: TextAlign.center,
             style: const TextStyle(
+              color: Colors.white70,
               fontSize: 16,
-              color: Colors.black54,
               height: 1.6,
             ),
           ),
