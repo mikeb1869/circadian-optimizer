@@ -176,16 +176,25 @@ class SkyPainter extends CustomPainter {
   }
 
   void _drawSun(Canvas canvas, ArcGeometry geo) {
+    if (now.isBefore(sunrise)) return;
+
     final dayLength = sunset.difference(sunrise).inMinutes.toDouble();
     final minutesSinceSunrise = now.difference(sunrise).inMinutes.toDouble();
     final t = (minutesSinceSunrise / dayLength).clamp(0.0, 1.0);
 
+    const fadeWindowMinutes = 30.0;
+    final minutesToSunset = sunset.difference(now).inMinutes.toDouble();
+    final opacity = (minutesToSunset / fadeWindowMinutes).clamp(0.0, 1.0);
+
+    if (opacity == 0.0) return;
+
     final sunX = _quadraticBezierPoint(geo.startX, geo.controlX, geo.endX, t);
     final sunY = _quadraticBezierPoint(geo.horizonY, geo.controlY, geo.horizonY, t);
 
-    final solidPaint = Paint()..color = const Color(0xFFFDB813);
+    final solidPaint = Paint()
+      ..color = const Color(0xFFFDB813).withValues(alpha: opacity);
     final glowPaint = Paint()
-      ..color = const Color(0xFFFDB813).withValues(alpha: 0.3);
+      ..color = const Color(0xFFFDB813).withValues(alpha: 0.3 * opacity);
 
     canvas.drawCircle(Offset(sunX, sunY), 20, glowPaint);
     canvas.drawCircle(Offset(sunX, sunY), 13, solidPaint);
