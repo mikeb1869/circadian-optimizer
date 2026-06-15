@@ -62,11 +62,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
+        backgroundColor: const Color(0xFF0F1F5C),
+        foregroundColor: Colors.white,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFF5F5F7),
+      backgroundColor: const Color(0xFF0F1F5C),
       body: ListView(
         children: [
           const SizedBox(height: 12),
@@ -138,11 +138,11 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 4, 20, 6),
       child: Text(
         title.toUpperCase(),
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.8,
-          color: Colors.grey.shade500,
+          color: Colors.white54,
         ),
       ),
     );

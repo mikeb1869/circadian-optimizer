@@ -53,8 +53,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       assetPath: 'assets/illustrations/onboarding_3.svg',
       title: 'Built for wherever you are',
       body:
-          'Sunrise in Chiang Mai isn\'t sunrise in Tokyo. Your schedule '
-          'updates automatically when you travel.',
+          'Sunrise in Medellín isn\'t sunrise in Tokyo. Your schedule '
+          'updates automatically wherever you are.',
       buttonLabel: 'Next',
     ),
     _PageData(

@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F7),
+      backgroundColor: const Color(0xFF0F1F5C),
       body: ValueListenableBuilder<ScheduleState>(
         valueListenable: _viewModel.state,
         builder: (context, state, _) {
@@ -166,13 +166,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        height: 100,
+                        height: 60,
                         child: Container(
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Color(0xFFF5F5F7)],
+                              colors: [Colors.transparent, Color(0xFF0F1F5C)],
                             ),
                           ),
                         ),
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 0),
                 _CueCardList(schedule: schedule),
                 const SizedBox(height: 24),
               ],

@@ -60,7 +60,7 @@ class _CueCardState extends State<CueCard> {
     return Opacity(
       opacity: isPassed ? 0.4 : 1.0,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isActive ? const Color(0xFFFAEEDA) : Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -80,10 +80,10 @@ class _CueCardState extends State<CueCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(14, 14, 14, 10),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
               child: Row(
                 children: [
-                  Text(widget.icon, style: const TextStyle(fontSize: 22)),
+                  Text(widget.icon, style: const TextStyle(fontSize: 32)),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -92,7 +92,7 @@ class _CueCardState extends State<CueCard> {
                         Text(
                           widget.label,
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.black87,
                           ),
@@ -101,7 +101,7 @@ class _CueCardState extends State<CueCard> {
                         Text(
                           '${widget.timeRange} · ${_statusText()}',
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 14,
                             color: _statusTextColor(),
                           ),
                         ),
@@ -128,7 +128,7 @@ class _CueCardState extends State<CueCard> {
                 child: Text(
                   widget.scienceExplanation,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 14,
                     color: Colors.grey.shade700,
                     height: 1.5,
                   ),

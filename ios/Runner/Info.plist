@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Circadian Optimizer</string>
+	<string>Helio</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>circadian_optimizer</string>
+	<string>Helio</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -27,11 +27,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Circadian Optimizer needs your location to calculate local sunrise and sunset times.</string>
+	<string>Helio needs your location to calculate local sunrise and sunset times.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Circadian Optimizer needs your location to calculate local sunrise and sunset times.</string>
+	<string>Helio needs your location to calculate local sunrise and sunset times.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Circadian Optimizer needs your location to calculate local sunrise and sunset times.</string>
+	<string>Helio needs your location to calculate local sunrise and sunset times.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
