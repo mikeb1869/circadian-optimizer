@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/notification_service.dart';
 import '../viewmodels/schedule_viewmodel.dart';
 import 'onboarding_screen.dart';
@@ -43,6 +44,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (state is ScheduleSuccess) {
         await _notificationService.scheduleAllCueNotifications(state.schedule);
       }
+    }
+  }
+
+  Future<void> _sendFeedback() async {
+    final uri = Uri(
+      scheme: 'mailto',
+      path: 'mjbarrera@clicksavvydigital.com',
+      queryParameters: {'subject': 'Helio App Feedback'},
+    );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 
@@ -119,6 +131,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: const Text('Replay onboarding'),
               trailing: const Icon(Icons.chevron_right),
               onTap: _resetOnboarding,
+            ),
+          ),
+          const SizedBox(height: 16),
+          const _SectionHeader(title: 'Feedback'),
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListTile(
+              title: const Text('Send feedback'),
+              subtitle: const Text('Share your thoughts with the developer'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: _sendFeedback,
             ),
           ),
           const SizedBox(height: 24),
