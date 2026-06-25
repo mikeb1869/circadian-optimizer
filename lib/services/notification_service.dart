@@ -13,14 +13,12 @@ class NotificationService {
     presentSound: true,
   );
 
-  static const _notificationDetails = NotificationDetails(
-    iOS: _iosDetails,
-  );
+  static const _notificationDetails = NotificationDetails(iOS: _iosDetails);
 
   Future<void> init() async {
     tz.initializeTimeZones();
-    final timezoneName = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timezoneName));
+    final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
 
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
@@ -28,15 +26,14 @@ class NotificationService {
       requestSoundPermission: false,
     );
 
-    await _plugin.initialize(
-      const InitializationSettings(iOS: iosSettings),
-    );
+    await _plugin.initialize(const InitializationSettings(iOS: iosSettings));
   }
 
   Future<bool> requestPermission() async {
     final granted = await _plugin
         .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
+          IOSFlutterLocalNotificationsPlugin
+        >()
         ?.requestPermissions(alert: true, sound: true);
     return granted ?? false;
   }
@@ -77,7 +74,8 @@ class NotificationService {
       scheduleNotification(
         id: 2,
         title: 'Caffeine cutoff ☕',
-        body: 'Last call for caffeine — avoid it after this to protect your sleep.',
+        body:
+            'Last call for caffeine — avoid it after this to protect your sleep.',
         scheduledDate: schedule.caffeineCutoff,
       ),
       scheduleNotification(
