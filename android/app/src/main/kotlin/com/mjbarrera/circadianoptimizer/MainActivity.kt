@@ -1,4 +1,4 @@
-package com.example.circadian_optimizer
+package com.mjbarrera.circadianoptimizer
 
 import io.flutter.embedding.android.FlutterActivity
 
