@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import '../models/circadian_schedule.dart';
 import '../viewmodels/schedule_viewmodel.dart';
@@ -53,9 +54,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F1F5C),
-      body: ValueListenableBuilder<ScheduleState>(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF0F1F5C),
+        body: ValueListenableBuilder<ScheduleState>(
         valueListenable: _viewModel.state,
         builder: (context, state, _) {
           return switch (state) {
@@ -188,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           };
         },
       ),
+    ),
     );
   }
 }
