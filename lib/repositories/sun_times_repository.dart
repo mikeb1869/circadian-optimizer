@@ -12,13 +12,13 @@ class SunTimes {
 }
 
 class SunTimesRepository {
-  Future<SunTimes> getSunTimes(LocationData location) async {
-    final now = DateTime.now();
-    final timezoneOffset = now.timeZoneOffset.inMinutes / 60;
+  Future<SunTimes> getSunTimes(LocationData location, {DateTime? date}) async {
+    final targetDate = date ?? DateTime.now();
+    final timezoneOffset = DateTime.now().timeZoneOffset.inMinutes / 60;
     final instant = Instant(
-      year: now.year,
-      month: now.month,
-      day: now.day,
+      year: targetDate.year,
+      month: targetDate.month,
+      day: targetDate.day,
       timeZoneOffset: timezoneOffset,
     );
 

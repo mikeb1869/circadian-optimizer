@@ -61,34 +61,71 @@ class NotificationService {
 
   Future<void> cancelAll() => _plugin.cancelAll();
 
-  Future<void> scheduleAllCueNotifications(CircadianSchedule schedule) async {
+  Future<void> scheduleAllCueNotifications(
+    CircadianSchedule today,
+    CircadianSchedule tomorrow,
+  ) async {
     await _plugin.cancelAll();
 
+    final nudgeDate = DateTime.now().add(const Duration(days: 2));
+
     await Future.wait([
+      // Today's cues — IDs 1–4
       scheduleNotification(
         id: 1,
         title: 'Morning sunlight ☀️',
         body: 'Time to get outside for your morning light exposure.',
-        scheduledDate: schedule.morningSunlightStart,
+        scheduledDate: today.morningSunlightStart,
       ),
       scheduleNotification(
         id: 2,
         title: 'Caffeine cutoff ☕',
-        body:
-            'Last call for caffeine — avoid it after this to protect your sleep.',
-        scheduledDate: schedule.caffeineCutoff,
+        body: 'Last call for caffeine — avoid it after this to protect your sleep.',
+        scheduledDate: today.caffeineCutoff,
       ),
       scheduleNotification(
         id: 3,
         title: 'Afternoon sunlight 🌤️',
         body: 'Step outside for your afternoon light anchor.',
-        scheduledDate: schedule.afternoonSunlightStart,
+        scheduledDate: today.afternoonSunlightStart,
       ),
       scheduleNotification(
         id: 4,
         title: 'Dim the lights 🌙',
         body: 'Time to dim overhead lights and ease into the evening.',
-        scheduledDate: schedule.dimLights,
+        scheduledDate: today.dimLights,
+      ),
+      // Tomorrow's cues — IDs 5–8
+      scheduleNotification(
+        id: 5,
+        title: 'Morning sunlight ☀️',
+        body: 'Time to get outside for your morning light exposure.',
+        scheduledDate: tomorrow.morningSunlightStart,
+      ),
+      scheduleNotification(
+        id: 6,
+        title: 'Caffeine cutoff ☕',
+        body: 'Last call for caffeine — avoid it after this to protect your sleep.',
+        scheduledDate: tomorrow.caffeineCutoff,
+      ),
+      scheduleNotification(
+        id: 7,
+        title: 'Afternoon sunlight 🌤️',
+        body: 'Step outside for your afternoon light anchor.',
+        scheduledDate: tomorrow.afternoonSunlightStart,
+      ),
+      scheduleNotification(
+        id: 8,
+        title: 'Dim the lights 🌙',
+        body: 'Time to dim overhead lights and ease into the evening.',
+        scheduledDate: tomorrow.dimLights,
+      ),
+      // Nudge — ID 9
+      scheduleNotification(
+        id: 9,
+        title: 'Helio needs a refresh 📅',
+        body: 'It\'s been a couple of days — tap to refresh your Helio schedule.',
+        scheduledDate: nudgeDate,
       ),
     ]);
   }

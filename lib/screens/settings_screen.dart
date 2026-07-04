@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../models/circadian_schedule.dart';
+import '../repositories/sun_times_repository.dart';
 import '../services/notification_service.dart';
 import '../viewmodels/schedule_viewmodel.dart';
 import 'onboarding_screen.dart';
@@ -16,6 +18,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final _viewModel = GetIt.instance<ScheduleViewModel>();
   final _notificationService = GetIt.instance<NotificationService>();
+  final _sunTimesRepository = GetIt.instance<SunTimesRepository>();
 
   bool _notificationsEnabled = true;
 
@@ -41,8 +44,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await _notificationService.cancelAll();
     } else {
       final state = _viewModel.state.value;
-      if (state is ScheduleSuccess) {
-        await _notificationService.scheduleAllCueNotifications(state.schedule);
+      final location = _viewModel.lastLocation;
+      if (state is ScheduleSuccess && location != null) {
+        final tomorrowSunTimes = await _sunTimesRepository.getSunTimes(
+          location,
+          date: DateTime.now().add(const Duration(days: 1)),
+        );
+        final tomorrowSchedule = CircadianSchedule.fromSunTimes(tomorrowSunTimes);
+        await _notificationService.scheduleAllCueNotifications(
+          state.schedule,
+          tomorrowSchedule,
+        );
       }
     }
   }
