@@ -20,13 +20,19 @@ class NotificationService {
     final timezoneInfo = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
 
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
+
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
     );
 
-    await _plugin.initialize(const InitializationSettings(iOS: iosSettings));
+    await _plugin.initialize(
+      const InitializationSettings(android: androidSettings, iOS: iosSettings),
+    );
   }
 
   Future<bool> requestPermission() async {
@@ -80,7 +86,8 @@ class NotificationService {
       scheduleNotification(
         id: 2,
         title: 'Caffeine cutoff ☕',
-        body: 'Last call for caffeine — avoid it after this to protect your sleep.',
+        body:
+            'Last call for caffeine — avoid it after this to protect your sleep.',
         scheduledDate: today.caffeineCutoff,
       ),
       scheduleNotification(
@@ -105,7 +112,8 @@ class NotificationService {
       scheduleNotification(
         id: 6,
         title: 'Caffeine cutoff ☕',
-        body: 'Last call for caffeine — avoid it after this to protect your sleep.',
+        body:
+            'Last call for caffeine — avoid it after this to protect your sleep.',
         scheduledDate: tomorrow.caffeineCutoff,
       ),
       scheduleNotification(
@@ -124,7 +132,8 @@ class NotificationService {
       scheduleNotification(
         id: 9,
         title: 'Helio needs a refresh 📅',
-        body: 'It\'s been a couple of days — tap to refresh your Helio schedule.',
+        body:
+            'It\'s been a couple of days — tap to refresh your Helio schedule.',
         scheduledDate: nudgeDate,
       ),
     ]);
